@@ -1,0 +1,24 @@
+{
+  "name": "ganache-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rellyrell24/ganache-practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rellyrell24/ganache-practice/issues"
+  },
+  "homepage": "https://github.com/rellyrell24/ganache-practice#readme",
+  "dependencies": {
+    "ethereumjs-tx": "^2.1.2",
+    "web3": "^1.3.6"
+  }
+}
