@@ -3,7 +3,7 @@
 
 <head>
     <title>Ethereum Secret Messenger</title>
-
+    <link rel="stylesheet" type="text/css" href="main.css">
     <script src="https://unpkg.com/web3@latest/dist/web3.min.js"></script>
 </head>
 
@@ -22,15 +22,15 @@
         if (typeof web3 !== 'undefined') {
             web3 = new Web3(web3.currentProvider);
         } else {
-            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/21c115684e614b19ab4020c3b8b3deb9"));
         }
 
         // Set a deafult account
         web3.eth.deafaultAccount = web3.eth.accounts[0];
 
         //get the contract address
-        var sender = '0x766aEDd811Bd30DEff4aEFaCA827A8534F9b41fE'
-        var ca = '0xA768769b221385f2D316a68C6f7f3602bCCd0d2C'
+        var sender = '0x0132F60cbd2561bbAE2792d665477C9C0EF0daD0'
+        var ca = '0xC5997f606d0a80B71C8b16628F29035AC09D4454'
         var abi = [
 	{
 		"constant": false,
@@ -74,6 +74,8 @@
         };
         function btnClick() {
             var secret = document.getElementById("userInput").value
+            console.log(secret);
+
             var msgObject = remixContract.methods.setMessage(secret);
 
             msgObject.send(function (err, res) {
