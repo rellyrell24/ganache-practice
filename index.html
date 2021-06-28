@@ -2,21 +2,18 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Deploy a Remix Contract</title>
+    <title>Ethereum Secret Messenger</title>
 
-    <link rel="stylesheet" type="text/css" href="main.css">
-
-    <scipt src="https://cdn.jsdeliver.net/gh/ethereum/web3.js/dis/web3/min.js"></scipt>
+    <script src="https://unpkg.com/web3@latest/dist/web3.min.js"></script>
 </head>
 
 <body>
     <div>
-        <h1>
-            Deploy a Remix Contract
-        </h1>
+        <h1>Ethereum Secret Messenger</h1>
+        <hr>
+        <label>This site writes a secret message to the Ethereum Blockchain!</label>
+        <input id="userInput" type="text">
+        <button id="setMessageButton">Set secret message</button>
     </div>
 
     <script>
@@ -25,14 +22,16 @@
         if (typeof web3 !== 'undefined') {
             web3 = new Web3(web3.currentProvider);
         } else {
-            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
         }
 
         // Set a deafult account
         web3.eth.deafaultAccount = web3.eth.accounts[0];
 
         //get the contract address
-        var remixContract = web3.eth.contract([
+        var sender = '0x766aEDd811Bd30DEff4aEFaCA827A8534F9b41fE'
+        var ca = '0xA768769b221385f2D316a68C6f7f3602bCCd0d2C'
+        var abi = [
 	{
 		"constant": false,
 		"inputs": [
@@ -61,12 +60,31 @@
 		"stateMutability": "view",
 		"type": "function"
 	}
-]);
+]
+        var remixContract = new web3.eth.Contract(abi, ca, {from: sender});
 
-        //get the contract abi
-        var myMessage = remixContract.at('0x6075C4D5419F6D4950251E95251351ab5651cc84');
+        console.log(remixContract)
+        window.onload = function () {
+            var btn = document.getElementById("setMessageButton");
+            if (btn.addEventListener) {
+                btn.addEventListener("click", btnClick, false);
+            } else if (btn.attachEvent) {
+                btn.attachEvent("onclick", btnClick);
+            }
+        };
+        function btnClick() {
+            var secret = document.getElementById("userInput").value
+            var msgObject = remixContract.methods.setMessage(secret);
 
-        console.log(myMessage)
+            msgObject.send(function (err, res) {
+                if (!err) {
+                    console.log(res)
+                } else {
+                    console.log(err)
+                }
+            })
+        }
+
     </script>
 </body>
 </html>
